@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: stg_brands
+    description: This model contains the list of brands
+    columns:
+      - name: brand_id
+        description: "Primary key, unique identifier for each brand."
+        tests:
+            - unique
+            - not_null
+      - name: order_name
+        description: "Name of the brand."
