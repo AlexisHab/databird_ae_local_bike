@@ -22,3 +22,14 @@ models:
             - not_null
       - name: category_name
         description: "Name of the category."
+
+  - name: stg_customers
+    description: This model contains the list of customerscategories
+    columns:
+      - name: customer_id
+        description: "Primary key, unique identifier for each category."
+        tests:
+            - unique
+            - not_null
+
+      
