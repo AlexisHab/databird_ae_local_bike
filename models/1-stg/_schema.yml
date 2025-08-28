@@ -54,8 +54,8 @@ models:
         description: "Foreign Key, related to the list of stores"
         tests:
           - relationships:
-              field: store_id
               to: ref('stg_stores')
+              field: store_id
       - name: manager_id
         description: "List the ID of the manager, relative to staff_id"
         tests:
