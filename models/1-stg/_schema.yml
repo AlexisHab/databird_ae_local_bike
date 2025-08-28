@@ -57,8 +57,31 @@ models:
               to: ref('stg_stores')
               field: store_id
       - name: manager_id
-        description: "List the ID of the manager, relative to staff_id"
+        description: "List the ID of the manager, relative to staff_id."
         tests:
           - relationships:
               to: ref('stg_staffs')
               field: staff_id
+
+  - name: stg_products
+    description: This model contains the list of products
+    columns:
+      - name: product_id
+        description: "Primary key, unique identifier for each store."
+        data_tests:
+          - unique
+          - not_null
+      - name: brand_id
+        description: "Foreign Key, related to the list of brands"
+        data_tests:
+          - relationships:
+              arguments:
+                  to: ref('stg_brands')
+                  field: brand_id
+      - name: category_id
+        description: "List the ID of the manager, relative to categories"
+        data_tests:
+          - relationships:
+              arguments:
+                  to: ref('stg_categories')
+                  field: category_id
