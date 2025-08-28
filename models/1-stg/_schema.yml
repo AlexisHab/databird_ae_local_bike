@@ -41,3 +41,24 @@ models:
             - unique
             - not_null
       
+
+  - name: stg_staffs
+    description: This model contains the list of staff members
+    columns:
+      - name: staff_id
+        description: "Primary key, unique identifier for each store."
+        tests:
+            - unique
+            - not_null
+      - name: store_id
+        description: "Foreign Key, related to the list of stores"
+        tests:
+          - relationships:
+              to: ref('stg_stores')
+              field: store_id
+      - name: manager_id
+        description: "List the ID of the manager, relative to staff_id"
+        tests:
+          - relationships:
+              to: ref('stg_staffs')
+              field: staff_id
