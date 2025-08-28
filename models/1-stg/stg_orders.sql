@@ -13,6 +13,6 @@ select
 
     cast(required_date as date) as required_date,
     cast(order_date as date) as order_date,
-    cast(NULLIF(shipped_date,'NULL') as date) as shipped_date,
+    cast(NULLIF(shipped_date,'NULL') as date) as shipped_date
  
 from {{ source('local_bike','orders')}}
