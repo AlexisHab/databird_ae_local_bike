@@ -6,7 +6,7 @@ models:
     columns:
       - name: brand_id
         description: "Primary key, unique identifier for each brand."
-        tests:
+        data_tests:
             - unique
             - not_null
       - name: brand_name
@@ -17,7 +17,7 @@ models:
     columns:
       - name: category_id
         description: "Primary key, unique identifier for each category."
-        tests:
+        data_tests:
             - unique
             - not_null
       - name: category_name
@@ -28,7 +28,7 @@ models:
     columns:
       - name: customer_id
         description: "Primary key, unique identifier for each customer."
-        tests:
+        data_tests:
             - unique
             - not_null
 
@@ -37,7 +37,7 @@ models:
     columns:
       - name: store_id
         description: "Primary key, unique identifier for each store."
-        tests:
+        data_tests:
             - unique
             - not_null
       
@@ -47,21 +47,23 @@ models:
     columns:
       - name: staff_id
         description: "Primary key, unique identifier for each store."
-        tests:
+        data_tests:
             - unique
             - not_null
       - name: store_id
         description: "Foreign Key, related to the list of stores"
-        tests:
+        data_tests:
           - relationships:
-              to: ref('stg_stores')
-              field: store_id
+              arguments:
+                to: ref('stg_stores')
+                field: store_id
       - name: manager_id
         description: "List the ID of the manager, relative to staff_id."
-        tests:
+        data_tests:
           - relationships:
-              to: ref('stg_staffs')
-              field: staff_id
+              arguments:
+                to: ref('stg_staffs')
+                field: staff_id
 
   - name: stg_products
     description: This model contains the list of products
