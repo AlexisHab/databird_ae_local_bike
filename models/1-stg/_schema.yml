@@ -54,6 +54,7 @@ models:
         description: "Foreign Key, related to the list of stores"
         data_tests:
           - relationships:
+              name: "relationship__stg_staffs__store_id__exists__in__stg_store"
               arguments:
                 to: ref('stg_stores')
                 field: store_id
@@ -61,6 +62,7 @@ models:
         description: "List the ID of the manager, relative to staff_id."
         data_tests:
           - relationships:
+              name: "relationship__stg_staffs__manager_id__exists__in__staff_id__stg_staffs"
               arguments:
                 to: ref('stg_staffs')
                 field: staff_id
@@ -77,13 +79,104 @@ models:
         description: "Foreign Key, related to the list of brands"
         data_tests:
           - relationships:
+              name: "relationship__stg_products__brand_id__exists__in__stg_brands"
               arguments:
                   to: ref('stg_brands')
                   field: brand_id
       - name: category_id
-        description: "List the ID of the manager, relative to categories"
+        description: "Foreign Key, related to the list of categories"
         data_tests:
           - relationships:
+              name: "relationship__stg_products__category_id__exists__in__stg_categories"
               arguments:
                   to: ref('stg_categories')
                   field: category_id
+
+  - name: stg_stocks
+    description: This model contains the list of stocks
+    columns:
+      - name: stock_id
+        description: "Primary key, unique identifier for each stock. Concatenation of Store id & Product id"
+        data_tests:
+          - unique
+          - not_null
+      - name: store_id
+        description: "Foreign Key, related to the list of stores"
+        data_tests:
+          - relationships:
+              name: "relationship__stg_stocks__store_id__exists__in__stg_stores"
+              arguments:
+                  to: ref('stg_stores')
+                  field: store_id
+      - name: product_id
+        description: "Foreign Key, related to the list of products"
+        data_tests:
+          - relationships:
+              name: "relationship__stg_stocks__product_id__exists__in__stg_products"
+              arguments:
+                  to: ref('stg_products')
+                  field: product_id
+
+  - name: stg_orders
+    description: This model contains the list of orders
+    columns:
+      - name: order_id
+        description: "Primary key, unique identifier for each order."
+        data_tests:
+          - unique
+          - not_null
+      - name: store_id
+        description: "Foreign Key, related to the list of stores"
+        data_tests:
+          - relationships:
+              name: "relationship__stg_orders__store_id__exists__in__stg_stores"
+              arguments:
+                  to: ref('stg_stores')
+                  field: store_id
+      - name: staff_id
+        description: "Foreign Key, related to the list of staffs"
+        data_tests:
+          - relationships:
+              name: "relationship__stg_orders__staff_id__exists__in__stg_staffs"
+              arguments:
+                  to: ref('stg_staffs')
+                  field: staff_id
+      - name: customer_id
+        description: "Foreign Key, related to the list of customers"
+        data_tests:
+          - relationships:
+              name: "relationship__stg_orders__customer_id__exists__in__stg_customers"
+              arguments:
+                  to: ref('stg_customers')
+                  field: customer_id
+
+  - name: stg_order_items
+    description: This model contains the list of items in an order
+    columns:
+      - name: order_item_id
+        description: "Primary key, unique identifier for each order item."
+        data_tests:
+          - unique
+          - not_null
+      - name: order_id
+        description: "Foreign Key, related to the list of order"
+        data_tests:
+          - relationships:
+              name: "relationship__stg_order_items__order_id__exists__in__stg_orders"
+              arguments:
+                  to: ref('stg_orders')
+                  field: order_id
+      - name: product_id
+        description: "Foreign Key, related to the list of products"
+        data_tests:
+          - relationships:
+              name: "relationship__stg_order_items__product_id__exists__in__stg_products"
+              arguments:
+                  to: ref('stg_products')
+                  field: product_id
+      - name: quantity
+        data_tests:
+          - not_null
+      - name: list_price
+        data_tests:
+          - not_null 

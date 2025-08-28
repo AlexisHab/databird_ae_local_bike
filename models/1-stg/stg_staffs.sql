@@ -7,5 +7,5 @@ select
     cast(active as int) as active,
 
     cast(store_id as int) as store_id,
-    cast(NULLIF(manager_id,'NULL') as int) as manager_id,
+    cast(NULLIF(manager_id,'NULL') as int) as manager_id
 from {{ source('local_bike','staffs')}}

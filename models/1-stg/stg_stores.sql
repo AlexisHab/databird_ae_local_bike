@@ -6,5 +6,5 @@ select
     cast(street as string) as street,
     cast(city as string) as city,
     cast(state as string) as state,
-    cast(zip_code as int) as zip_code,
+    cast(zip_code as int) as zip_code
 from {{ source('local_bike','stores')}}
