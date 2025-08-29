@@ -24,6 +24,6 @@ select
     round(round(oi.quantity * oi.list_price,2) - total_order_item_amount,2) as order_item_reduction
 
 
-from {{ ref("stg_order_items") }} oi
-    left join {{ ref("stg_orders") }} o using (order_id)
-    left join {{ ref("stg_products") }} p using (product_id)
+from {{ ref("stg_sales__order_items") }} oi
+    left join {{ ref("stg_sales__orders") }} o using (order_id)
+    left join {{ ref("stg_production__products") }} p using (product_id)

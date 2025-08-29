@@ -78,6 +78,19 @@ models:
               arguments:
                   to: ref('stg_customers')
                   field: customer_id
+      - name: order_date
+        description: "Date when the order was placed"
+        tests:
+          - not_null
+      
+      - name: shipped_date
+        description: "Date when the order was shipped (null if not yet shipped)"
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: ">= order_date"
+              config:
+                where: "shipped_date is not null"
+
 
   - name: stg_sales__order_items
     description: This model contains the list of items in an order
@@ -106,6 +119,14 @@ models:
       - name: quantity
         data_tests:
           - not_null
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: " > 0"
+
       - name: list_price
         data_tests:
           - not_null 
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: " >= 0"
+

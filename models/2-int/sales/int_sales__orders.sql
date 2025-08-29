@@ -20,12 +20,12 @@ select
         SUM(total_order_item_amount_before_discount)
         ),2) as order_discount
 
-from {{ ref('int_orders_detailed') }}
+from {{ ref('int_sales__orders_detailed') }}
 group by
     order_id,
     store_id,
     customer_id,
     staff_id,
-    order_status,
+    order_status_label,
     order_date,
     shipped_date

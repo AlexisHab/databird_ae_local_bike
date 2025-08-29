@@ -5,7 +5,9 @@ models:
     description: '{{ doc("int_sales__orders_detailed") }}'
     tests:
       - dbt_utils.equal_rowcount:
-          compare_model: {{ ref('stg_sales__order_items') }}
+          compare_model: ref('stg_sales__order_items')
+      - dbt_utils.expression_is_true:
+          expression: "abs(order_item_reduction - (total_order_item_amount_before_discount - total_order_item_amount)) < 0.01"
 
    
     columns:
@@ -57,54 +59,35 @@ models:
       
       - name: shipped_date
         description: "Date when the order was shipped (null if not yet shipped)"
-        tests:
-          - dbt_utils.expression_is_true:
-              expression: "shipped_date >= order_date"
-              config:
-                where: "shipped_date is not null"
       
       - name: quantity
         description: "Number of units ordered for this item"
-        tests:
-          - not_null
-          - dbt_utils.expression_is_true:
-              expression: "quantity > 0"
       
       - name: order_item_price
         description: "List price per unit for this order item"
-        tests:
-          - not_null
-          - dbt_utils.expression_is_true:
-              expression: "order_item_price >= 0"
       
       - name: order_item_discount
         description: "Discount amount applied to this order item"
-        tests:
-          - not_null
-          - dbt_utils.expression_is_true:
-              expression: "order_item_discount >= 0"
       
       - name: total_order_item_amount_before_discount
         description: "Calculated gross amount (quantity × list price) before any discounts"
-        tests:
-          - not_null
-          - dbt_utils.expression_is_true:
-              expression: "total_order_item_amount_before_discount >= 0"
       
       - name: total_order_item_amount
         description: "Final net amount for this order item after discounts"
         tests:
           - not_null
           - dbt_utils.expression_is_true:
-              expression: "total_order_item_amount >= 0"
+              arguments:
+                expression: ">= 0"
           - dbt_utils.expression_is_true:
-              expression: "total_order_item_amount <= total_order_item_amount_before_discount"
+              arguments:
+                expression: "<= total_order_item_amount_before_discount"
       
       - name: order_item_reduction
         description: "Calculated discount amount (gross amount - net amount)"
         tests:
           - not_null
           - dbt_utils.expression_is_true:
-              expression: "order_item_reduction >= 0"
-          - dbt_utils.expression_is_true:
-              expression: "abs(order_item_reduction - (total_order_item_amount_before_discount - total_order_item_amount)) < 0.01"
+              arguments:
+                expression: ">= 0"
+
