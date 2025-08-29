@@ -10,6 +10,9 @@ select
     -- attributes
     
     cast(order_status as int) as order_status,
+    CASE 
+        WHEN order_status = 4 THEN 'Delivered'
+        ELSE 'Unclear' END as order_status_label,
 
     cast(required_date as date) as required_date,
     cast(order_date as date) as order_date,
