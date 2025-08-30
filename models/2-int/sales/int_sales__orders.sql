@@ -7,7 +7,7 @@ select
     staff_id,
 
     -- attributes
-    order_status_label,
+    order_status,
     order_date,
     shipped_date,
 
@@ -26,6 +26,6 @@ group by
     store_id,
     customer_id,
     staff_id,
-    order_status_label,
+    order_status,
     order_date,
     shipped_date
