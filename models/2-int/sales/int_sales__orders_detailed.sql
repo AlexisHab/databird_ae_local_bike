@@ -9,10 +9,8 @@ select
     o.customer_id,
     o.staff_id,
 
-    p.category_id,
-
     -- attributes
-    o.order_status_label,
+    o.order_status,
     o.order_date,
     o.shipped_date,
 
@@ -26,4 +24,3 @@ select
 
 from {{ ref("stg_sales__order_items") }} oi
     left join {{ ref("stg_sales__orders") }} o using (order_id)
-    left join {{ ref("stg_production__products") }} p using (product_id)
