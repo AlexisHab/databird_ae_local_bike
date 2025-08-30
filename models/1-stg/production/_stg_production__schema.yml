@@ -1,0 +1,74 @@
+version: 2
+
+models:
+  - name: stg_production__brands
+    description: This model contains the list of brands
+    columns:
+      - name: brand_id
+        description: "Primary key, unique identifier for each brand."
+        data_tests:
+            - unique
+            - not_null
+      - name: brand_name
+        description: "Name of the brand."
+
+  - name: stg_production__categories
+    description: This model contains the list of categories
+    columns:
+      - name: category_id
+        description: "Primary key, unique identifier for each category."
+        data_tests:
+            - unique
+            - not_null
+      - name: category_name
+        description: "Name of the category."
+
+  - name: stg_production__products
+    description: This model contains the list of products
+    columns:
+      - name: product_id
+        description: "Primary key, unique identifier for each store."
+        data_tests:
+          - unique
+          - not_null
+      - name: brand_id
+        description: "Foreign Key, related to the list of brands"
+        data_tests:
+          - relationships:
+              name: "relationship__stg_products__brand_id__exists__in__stg_brands"
+              arguments:
+                  to: ref('stg_production__brands')
+                  field: brand_id
+      - name: category_id
+        description: "Foreign Key, related to the list of categories"
+        data_tests:
+          - relationships:
+              name: "relationship__stg_products__category_id__exists__in__stg_categories"
+              arguments:
+                  to: ref('stg_production__categories')
+                  field: category_id
+
+  - name: stg_production__stocks
+    description: This model contains the list of stocks
+    columns:
+      - name: stock_id
+        description: "Primary key, unique identifier for each stock. Concatenation of Store id & Product id"
+        data_tests:
+          - unique
+          - not_null
+      - name: store_id
+        description: "Foreign Key, related to the list of stores"
+        data_tests:
+          - relationships:
+              name: "relationship__stg_stocks__store_id__exists__in__stg_stores"
+              arguments:
+                  to: ref('stg_sales__stores')
+                  field: store_id
+      - name: product_id
+        description: "Foreign Key, related to the list of products"
+        data_tests:
+          - relationships:
+              name: "relationship__stg_stocks__product_id__exists__in__stg_products"
+              arguments:
+                  to: ref('stg_production__products')
+                  field: product_id
