@@ -45,4 +45,4 @@ models:
           - relationships:
               arguments:
                 field: product_id
-                to: ref('dim_product')
+                to: ref('dim_products')
