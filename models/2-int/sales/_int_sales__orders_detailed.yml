@@ -44,13 +44,8 @@ models:
         tests:
           - not_null
       
-      - name: category_id
-        description: "Foreign key to categories table - Product category classification"
-        tests:
-          - not_null
-      
-      - name: order_status_label
-        description: "Current status of the order (e.g., pending, completed, delivered, cancelled)"
+      - name: order_status
+        description: "Current status id of the order"
         tests:
           - not_null
       
