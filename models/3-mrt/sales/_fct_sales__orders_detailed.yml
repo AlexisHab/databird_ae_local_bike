@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: fct_sales__orders_detailed
+    description: 'list of items in orders'
+   
+    columns:
+      - name: order_item_id
+        description: "Primary key - Unique identifier for each order item"
+        tests:
+          - not_null
+          - unique
+             
+      - name: store_id
+        description: "Foreign key to stores table - Store where the order was placed"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                field: store_id
+                to: ref('dim_stores')
+      
+      - name: customer_id
+        description: "Foreign key to customers table - Customer who placed the order"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                field: customer_id
+                to: ref('dim_customers')
+      
+      - name: staff_id
+        description: "Foreign key to staff table - Staff member who processed the order"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                field: staff_id
+                to: ref('dim_staffs')
+
+      - name: product_id
+        description: "Foreign key to products table - Identifies the product being ordered"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                field: product_id
+                to: ref('dim_product')
