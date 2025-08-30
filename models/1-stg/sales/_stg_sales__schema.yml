@@ -87,9 +87,10 @@ models:
         description: "Date when the order was shipped (null if not yet shipped)"
         tests:
           - dbt_utils.expression_is_true:
-              expression: ">= order_date"
-              config:
-                where: "shipped_date is not null"
+              arguments:
+                expression: ">= order_date"
+                config:
+                  where: "shipped_date is not null"
 
 
   - name: stg_sales__order_items
