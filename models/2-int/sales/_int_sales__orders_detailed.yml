@@ -5,9 +5,11 @@ models:
     description: '{{ doc("int_sales__orders_detailed") }}'
     tests:
       - dbt_utils.equal_rowcount:
-          compare_model: ref('stg_sales__order_items')
+          arguments:
+            compare_model: ref('stg_sales__order_items')
       - dbt_utils.expression_is_true:
-          expression: "abs(order_item_reduction - (total_order_item_amount_before_discount - total_order_item_amount)) < 0.01"
+          arguments:
+            expression: "abs(order_item_reduction - (total_order_item_amount_before_discount - total_order_item_amount)) < 0.01"
 
    
     columns:
