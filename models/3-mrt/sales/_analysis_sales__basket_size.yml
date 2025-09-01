@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: analysis_sales__basket_size
+    description: '{{ doc("analysis_sales__basket_size") }}'
+   
+    columns:
+
+             
+      - name: store_id
+        description: "Foreign key to stores table - Store where the order was placed"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                field: store_id
+                to: ref('dim_stores')
+      
+      
+      - name: staff_id
+        description: "Foreign key to staff table - Staff member who processed the order"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                field: staff_id
+                to: ref('dim_staffs')
+
+      - name: order_date
+        description: "Date dimension for time-series analysis"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "<= current_date"
+      
+      - name: order_status
+        description: "Order status category being summarized"
+
+      
+      - name: order_count
+        description: "Total number of orders for this combination of dimensions"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+      
+      - name: total_sales
+        description: "Sum of all order revenue (after discounts) for this grouping"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: " >= 0"
+      
+      - name: nb_items_sold
+        description: "Total quantity of items sold for this combination"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: " > 0"

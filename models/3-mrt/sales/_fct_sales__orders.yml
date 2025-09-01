@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: fct_sales__orders
-    description: 'list of orders'
+    description: '{{ doc("fct_sales__orders") }}'
    
     columns:
       - name: order_id
@@ -37,3 +37,29 @@ models:
               arguments:
                 field: staff_id
                 to: ref('dim_staffs')
+
+     
+      - name: order_status
+        description: "Current status of the order"
+      
+      - name: order_date
+        description: "Date when the order was placed"
+      
+      - name: shipped_date
+        description: "Date when the order was shipped (null if not shipped)"
+      
+      - name: total_number_items
+        description: "Count of different line items in this order"
+      
+      - name: total_order_item_amount
+        description: "Final amount customer pays after all discounts"
+      
+      - name: total_order_amount_before_discount
+        description: "Gross order value before any discounts applied"
+           
+      - name: total_order_reduction
+        description: "Total dollar amount saved through all discounts"
+      
+      - name: order_discount
+        description: "Overall order discount aggregating all item discounts"
+

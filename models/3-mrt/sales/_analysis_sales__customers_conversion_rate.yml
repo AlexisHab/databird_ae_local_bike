@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: analysis_sales__customers_conversion_rate
+    description: '{{ doc("analysis_sales__customers_conversion_rate") }}'
+
+    columns:
+      
+      - name: customer_id
+        description: "Foreign key to customers table - Customer who placed the order"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                field: customer_id
+                to: ref('dim_customers')
+      
+      - name: total_nb_items_purchased
+        description: "Lifetime count of all items purchased by this customer"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: " >= 0"
+      
+      - name: total_amount_spent
+        description: "Lifetime revenue from this customer after all discounts"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: " >= 0"
+      
+      - name: most_recent_purchase
+        description: "Date of customer's last order (1900-01-01 if never purchased)"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: " >= '1900-01-01'"
+      
+      - name: days_since_last_purchase
+        description: "Days between last purchase and reference date (-1 if never purchased)"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= -1"
+      
+      - name: has_made_a_purchase
+        description: "Binary flag: 1 if customer has ever made a purchase, 0 if never"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+              quote: false
+
