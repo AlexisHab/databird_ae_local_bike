@@ -1,7 +1,7 @@
 select
     customer_id, 
-    first_name as `first name`, 
-    last_name as `last name`,
+    first_name, 
+    last_name,
     city,
     state,
     zip_code,
