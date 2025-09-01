@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: '{{ doc("dim_customers") }}'
+
+  
+    columns:
+      - name: date_id
+        description: "Primary key - Unique identifier for each date"
+      
+      - name: date_value
+        description: "The actual calendar date"
+      
+      - name: year_month
+        description: "Year and month combined (e.g., 2025-01)"
+      
+      - name: year_month_day
+        description: "Full date in readable format"
+      
+      - name: year
+        description: "Calendar year (e.g., 2025)"
+      
+      - name: month
+        description: "Month number (1-12)"
+      
+      - name: month_padded
+        description: "Month with leading zero (01-12)"
+
+      
+      - name: day
+        description: "Day of the month (1-31)"
+      
+      - name: day_padded
+        description: "Day with leading zero (01-31)"
+      
+      - name: day_of_week
+        description: "Day of the week number (1=Monday, 2=Tuesday, etc.)"
+      
+      - name: day_of_year
+        description: "Day number within the year (1-365/366)"
+      
+      - name: quarter
+        description: "Quarter of the year (1, 2, 3, or 4)"
+      
+      - name: week_number
+        description: "Week number within the year"
+      
+      - name: is_current_month
+        description: "Boolean flag indicating if the date falls in the current month"
+      
+      - name: is_last_3_month
+        description: "Boolean flag indicating if the date falls within the last 3 months"
+      
+      - name: is_last_6_month
+        description: "Boolean flag indicating if the date falls within the last 6 months"

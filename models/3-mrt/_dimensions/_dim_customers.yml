@@ -1,0 +1,45 @@
+
+
+version: 2
+
+models:
+  - name: dim_customers
+    description: '{{ doc("dim_customers") }}'
+    
+    
+    columns:
+      - name: customer_id
+        description: "Primary key - Unique identifier for each customer"
+        tests:
+          - not_null
+          - unique
+      
+      - name: first_name
+        description: "Customer's first name"
+        tests:
+          - not_null
+          - dbt_utils.not_empty_string
+      
+      - name: last_name
+        description: "Customer's last name"
+        tests:
+          - not_null
+          - dbt_utils.not_empty_string
+      
+      - name: city
+        description: "City where the customer is located"
+        tests:
+          - not_null
+          - dbt_utils.not_empty_string
+      
+      - name: state
+        description: "State or province where the customer is located"
+        tests:
+          - not_null
+          - dbt_utils.not_empty_string
+      
+      - name: zip_code
+        description: "Postal/ZIP code for the customer's address"
+        tests:
+          - not_null
+
