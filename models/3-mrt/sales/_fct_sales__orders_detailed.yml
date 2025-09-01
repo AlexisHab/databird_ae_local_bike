@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: fct_sales__orders_detailed
-    description: 'list of items in orders'
+    description: '{{ doc("fct_sales__orders_detailed") }}'
    
     columns:
       - name: order_item_id
@@ -46,3 +46,34 @@ models:
               arguments:
                 field: product_id
                 to: ref('dim_products')
+
+      - name: order_status
+        description: "Current status of the order"
+
+
+      
+      - name: order_date
+        description: "Date when the order was placed"
+
+      
+      - name: shipped_date
+        description: "Date when the order was shipped (null if not shipped)"
+      
+      - name: quantity
+        description: "Number of units ordered for this item"
+      
+      - name: order_item_price
+        description: "Price per unit for this order item"
+      
+      - name: order_item_discount
+        description: "Discount amount applied to this order item"
+
+      
+      - name: total_order_item_amount_before_discount
+        description: "Calculated gross amount (quantity × price) before discounts"
+      
+      - name: total_order_item_amount
+        description: "Final net amount after discounts applied"
+      
+      - name: order_item_reduction
+        description: "Total discount amount applied (gross - net)"
